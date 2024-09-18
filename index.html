@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Ur Assignment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+
+<div class="top-bar">
+    First order? Save 20% on it (10% instant discount + 10% on next order)
+    <button class="save-button" onclick="window.location.href='save20.html'">Save 20</button>
+
+</div>
+
+<div class="navbar">
+    <div class="logo-container">
+        <img src="C:\Work\logo.jpg" alt="Logo">
+        <div class="brand">Assign Ur Assignment</div>
+    </div>
+    <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+    <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#how-it-works">How it Works?</a>
+        <a href="price2.html">Prices</a>
+        <a href="#our-writers">Our Writers</a>
+        <a href="#faq">FAQ</a>
+        <a href="#testimonials">Testimonials</a>
+    </div>
+    <div class="action-buttons">
+        <a href="#signin">Sign In</a>
+        <a href="#order-now" class="order-now">Order Now</a>
+    </div>
+</div>
+
+<section class="hero">
+    <h1 style="font-family: Comic Sans MS">Welcome to Assign Ur Assignment</h1>
+    <p>Your one-stop solution for all your assignment needs</p>
+    <div class="hero-buttons">
+        <button  id="openPopup" class="btn btn-primary" style="cursor: pointer">Get Started</button>
+        <button class="btn btn-secondary">Learn More →</button>
+    </div>
+</section>
+
+<div id="popupForm" class="popup">
+    <div class="popup-content">
+        <span class="close">&times;</span>
+        <h2 style="font-size:45px; text-align: center;">Order Form</h2>
+        <br><br>
+        <form action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="6964f5ae-e5b4-4f53-a119-11e42a9578b2">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+            <label for="contact">Contact No:</label>
+            <input type="tel" id="contact" name="contact" class="form-control" required>
+            <label for="school">School/College Name:</label>
+            <input type="text" id="school" name="School Name" class="form-control" required>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" class="form-control" required>
+            <label for="typeOfWork">Type of Work:</label>
+            <select id="typeOfWork" name="typeOfWork" class="form-control" required>
+                <option value="">Select Type</option>
+                <option value="journals">Journals</option>
+                <option value="essay">Essay</option>
+                <option value="bookCompletion">Book Completion</option>
+                <option value="presentation">Presentation</option>
+                <option value="pdfEditing">PDF Editing</option>
+                <option value="Other">Other</option>
+            </select>
+            <label for="submissionDate">Submission Date:</label>
+            <input type="date" id="submissionDate" name="submissionDate" class="form-control" required>
+            <label for="pages">Number of Pages:</label>
+            <input type="number" id="pages" name="NoOfPages" class="form-control" required>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+<section class="how-it-works" id="how-it-works">
+    <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="icon">📝</div>
+                <h1>Place Your Order</h1>
+                <p>Select the type of assignment and fill in the details.</p>
+            </div>
+            <div class="step">
+                <div class="icon">📅</div>
+                <h1>Track the Progress</h1>
+                <p>Stay updated on the progress through your dashboard.</p>
+            </div>
+            <div class="step">
+                <div class="icon">✅</div>
+                <h1>Get Your Paper</h1>
+                <p>Receive the completed assignment before your deadline.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Us Section -->
+<!-- Why Us Section -->
+<section class="why-us">
+    <div class="container">
+        <h2 class="section-title">Why Choose Us</h2>
+        <div class="reasons">
+            <div class="reason">
+                <i class="fas fa-check-circle"></i>
+                <h3>High Quality</h3>
+                <p>We ensure top-notch quality in all our services, guaranteeing satisfaction and trust.</p>
+            </div>
+            <div class="reason">
+                <i class="fas fa-users"></i>
+                <h3>Expert Team</h3>
+                <p>Our team consists of experienced professionals who are experts in their fields.</p>
+            </div>
+            <div class="reason">
+                <i class="fas fa-clock"></i>
+                <h3>Timely Delivery</h3>
+                <p>We value your time and always deliver our services promptly.</p>
+            </div>
+            <div class="reason">
+                <i class="fas fa-dollar-sign"></i>
+                <h3>Affordable Pricing</h3>
+                <p>We offer competitive pricing without compromising on quality.</p>
+            </div>
+            <!-- New Reason 1 -->
+            <div class="reason">
+                <i class="fas fa-certificate"></i>
+                <h3>Certified Professionals</h3>
+                <p>Our writers are certified experts in various academic fields.</p>
+            </div>
+            <!-- New Reason 2 -->
+            <div class="reason">
+                <i class="fas fa-globe"></i>
+                <h3>Global Reach</h3>
+                <p>We cater to students from around the world with diverse needs.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="price-quote-section">
+    <h2>Wonder how much would a unique, custom-written sample cost?</h2>
+    <button class="price-quote-btn" onclick="window.location.href='price2.html'">Get a Free Price Quote</button>
+    <p>Get a free estimate of your paper sample's price</p>
+</div>
+
+<section id="achievements">
+    <div class="content-wrapper">
+        <h2 class="styled-title">
+    <span class="styled-title-highlight">Our</span> Achievements
+</h2>
+
+        <div class="statistics">
+            <div class="stat-item">
+                <div class="stat-icon"><i class="fas fa-users"></i></div>
+                <div class="stat-number">105000+</div>
+                <div class="stat-label">Happy Students</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon"><i class="fas fa-book"></i></div>
+                <div class="stat-number">15.5</div>
+                <div class="stat-label">Samples Per Student Per Semester</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                <div class="stat-number">8</div>
+                <div class="stat-label">Semesters of Support</div>
+            </div>
+        </div>
+        <div class="background-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<script src="script.js" defer></script>
+
+</body>
+</html>
