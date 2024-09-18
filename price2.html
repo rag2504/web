@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Price Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.calculator-container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 25px;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.work-type-tabs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.tab {
+    flex: 1;
+    padding: 15px;
+    background-color: #f9f9f9;
+    color: #333333;
+    border: 2px solid #dddddd;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+}
+
+.tab.active {
+    background-color: #ff6600;
+    color: #ffffff;
+    border-color: #ff6600;
+}
+
+label {
+    font-size: 16px;
+    color: #333333;
+    display: block;
+    margin-bottom: 10px;
+}
+
+select, input[type="number"], input[type="date"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 2px solid #dddddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.quantity-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#decreaseQty, #increaseQty {
+    width: 36px;
+    height: 36px;
+    background-color: #502FCF;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#quantity {
+    width: 70px;
+    text-align: center;
+    font-size: 16px;
+    padding: 8px;
+    border: 2px solid #dddddd;
+    border-radius: 8px;
+}
+
+.unit-toggle {
+    padding: 8px 12px;
+    background-color: #f4f4f4;
+    color: #333333;
+    border: 2px solid #dddddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.unit-toggle.active {
+    background-color: #502FCF;
+    color: #ffffff;
+    border-color: #502FCF;
+}
+
+.price-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.price-section span:last-child {
+    font-size: 24px;
+    color: #502FCF;
+}
+
+.proceed-btn {
+    background-color: #ff9966;
+    color: #ffffff;
+    border: none;
+    padding: 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.6s ease, box-shadow 0.6s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.proceed-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -50px;
+    width: 100px;
+    height: 300%;
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: rotate(45deg);
+    transition: left 1s ease;
+}
+
+.proceed-btn:hover::before {
+    left: 120%;
+}
+
+.proceed-btn:hover {
+    background-color: #ff6600;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .calculator-container {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    .tab {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .quantity-controls {
+        gap: 5px;
+    }
+
+    #decreaseQty, #increaseQty {
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+
+    #quantity {
+        width: 60px;
+    }
+
+    .price-section {
+        font-size: 20px;
+    }
+
+    .price-section span:last-child {
+        font-size: 22px;
+    }
+
+    .proceed-btn {
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+
+<div class="calculator-container">
+    <h2>Calculate Price</h2>
+
+    <!-- Work Type Tabs -->
+    <div class="work-type-tabs">
+        <button class="tab active" data-type="academic-writing">Academic Writing</button>
+        <button class="tab" data-type="editing">Editing & Proofreading</button>
+        <button class="tab" data-type="calculations">Calculations</button>
+    </div>
+
+    <!-- Type of Paper -->
+    <label for="paperType">Type of Paper:</label>
+    <select id="paperType">
+        <option value="essay">Essay</option>
+        <option value="journal">Journal</option>
+        <option value="presentation">Presentation</option>
+        <option value="book-completion">Book Completion</option>
+        <option value="pdf-editing">PDF Editing</option>
+        <option value="other">Other</option>
+    </select>
+
+    <!-- Quantity -->
+    <div class="quantity-section">
+        <label for="quantity">Quantity:</label>
+        <div class="quantity-controls">
+            <button id="decreaseQty">-</button>
+            <input type="number" id="quantity" value="1" min="1">
+            <button id="increaseQty">+</button>
+            <button class="unit-toggle active">Pages</button>
+            <button class="unit-toggle">Words</button>
+        </div>
+    </div>
+
+    <!-- Deadline -->
+    <label for="deadline">Deadline:</label>
+    <input type="date" id="deadline">
+
+    <!-- Approximate Price -->
+    <div class="price-section">
+        <span>Approx. price:</span>
+        <span id="price">₹0</span>
+    </div>
+
+    <!-- Proceed Button -->
+    <form action="order-summary.html" method="get" id="priceForm">
+        <input type="hidden" name="paperType" id="formPaperType">
+        <input type="hidden" name="quantity" id="formQuantity">
+        <input type="hidden" name="deadline" id="formDeadline">
+        <input type="hidden" name="price" id="formPrice">
+        <button type="submit" class="proceed-btn">Proceed to Order</button>
+    </form>
+</div>
+
+<script>
+    const workTypePrices = {
+        'academic-writing': {
+            'essay': 8,
+            'journal': 7,
+            'presentation': 8,
+            'book-completion': 12,
+            'pdf-editing': 6,
+            'other': 10
+        },
+        'editing': {
+            'essay': 5,
+            'journal': 6,
+            'presentation': 7,
+            'book-completion': 10,
+            'pdf-editing': 6,
+            'other': 9
+        },
+        'calculations': {
+            'essay': 10,
+            'journal': 10,
+            'presentation': 12,
+            'book-completion': 15,
+            'pdf-editing': 8,
+            'other': 10
+        }
+    };
+
+    let selectedWorkType = 'academic-writing';
+    let selectedPaperType = 'essay';
+    let unit = 'pages';
+    let quantity = 1;
+
+    function updatePrice() {
+        const basePrice = workTypePrices[selectedWorkType][selectedPaperType];
+        const deadlineInput = document.getElementById('deadline').value;
+        const currentDate = new Date();
+        const deadlineDate = new Date(deadlineInput);
+        const timeDiff = deadlineDate - currentDate;
+        const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+        let adjustedPrice = basePrice;
+        if (daysDiff <= 2) {
+            adjustedPrice += 3; // Add ₹3 per page
+        } else if (daysDiff >= 10) {
+            adjustedPrice -= 2; // Reduce ₹2 per page
+        }
+
+        const totalPrice = adjustedPrice * quantity;
+        document.getElementById('price').innerText = '₹' + totalPrice;
+
+        // Update hidden form fields
+        document.getElementById('formPaperType').value = selectedPaperType;
+        document.getElementById('formQuantity').value = quantity + ' ' + unit;
+        document.getElementById('formDeadline').value = deadlineInput;
+        document.getElementById('formPrice').value = '₹' + totalPrice;
+    }
+
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            selectedWorkType = this.getAttribute('data-type');
+            updatePrice();
+        });
+    });
+
+    document.getElementById('paperType').addEventListener('change', function() {
+        selectedPaperType = this.value;
+        updatePrice();
+    });
+
+    document.getElementById('quantity').addEventListener('input', function() {
+        quantity = parseInt(this.value);
+        updatePrice();
+    });
+
+    document.getElementById('decreaseQty').addEventListener('click', function() {
+        if (quantity > 1) {
+            document.getElementById('quantity').value = --quantity;
+            updatePrice();
+        }
+    });
+
+    document.getElementById('increaseQty').addEventListener('click', function() {
+        document.getElementById('quantity').value = ++quantity;
+        updatePrice();
+    });
+
+    document.getElementById('deadline').addEventListener('change', function() {
+        updatePrice();
+    });
+
+    document.querySelectorAll('.unit-toggle').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            document.querySelectorAll('.unit-toggle').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            unit = this.innerText.toLowerCase();
+            updatePrice();
+        });
+    });
+
+    updatePrice();
+</script>
+
+</body>
+</html>
