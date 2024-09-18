@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .summary-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h2 {
+            color: #333333;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-item:last-child {
+            margin-bottom: 40px;
+        }
+
+        .summary-label {
+            font-size: 18px;
+            font-weight: 600;
+            color: #555555;
+        }
+
+        .summary-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333333;
+        }
+
+        .confirm-btn, .edit-btn {
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            width: 100%;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .confirm-btn {
+            background-color: #52c41a;
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .confirm-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -50px;
+            width: 150px;
+            height: 300%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: rotate(45deg);
+            transition: left 0.8s ease-in-out;
+            z-index: 1;
+            animation: slide 1.2s linear infinite;
+        }
+
+        @keyframes slide {
+            from {
+                left: -150px;
+            }
+            to {
+                left: 100%;
+            }
+        }
+
+        .confirm-btn:hover {
+            background-color: #46a515;
+            transform: translateY(-2px);
+        }
+
+        .edit-btn {
+            background-color: #ff6600;
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .edit-btn:hover {
+            background-color: #cc5200;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .summary-container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .summary-label, .summary-value {
+                font-size: 16px;
+            }
+
+            .confirm-btn, .edit-btn {
+                font-size: 14px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="summary-container">
+    <h2>Order Summary</h2>
+    <div class="summary-item">
+        <span class="summary-label">Type of Paper:</span>
+        <span class="summary-value" id="summaryPaperType">Essay</span>
+    </div>
+    <div class="summary-item">
+        <span class="summary-label">Quantity:</span>
+        <span class="summary-value" id="summaryQuantity">1 Page</span>
+    </div>
+    <div class="summary-item">
+        <span class="summary-label">Deadline:</span>
+        <span class="summary-value" id="summaryDeadline">2024-08-18</span>
+    </div>
+    <div class="summary-item">
+        <span class="summary-label">Total Price:</span>
+        <span class="summary-value" id="summaryPrice">₹500</span>
+    </div>
+    <button class="confirm-btn">Confirm Order and Pay</button>
+    <button class="edit-btn">Edit Details</button>
+</div>
+
+<!-- Include Razorpay Checkout Script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    // Function to retrieve URL parameters
+    function getParameterByName(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    // Retrieve and display parameters
+    const paperType = getParameterByName('paperType') || 'Not provided';
+    const quantity = getParameterByName('quantity') || 'Not provided';
+    const deadline = getParameterByName('deadline') || 'Not provided';
+    const price = getParameterByName('price') || 'Not provided';
+
+    document.getElementById('summaryPaperType').innerText = paperType;
+    document.getElementById('summaryQuantity').innerText = quantity;
+    document.getElementById('summaryDeadline').innerText = deadline;
+    document.getElementById('summaryPrice').innerText = price;
+
+    // Function to convert rupees to paise
+    function convertRupeesToPaise(amountInRupees) {
+        return parseFloat(amountInRupees) * 100;
+    }
+
+    // Add event listener to the confirm button
+    document.querySelector('.confirm-btn').addEventListener('click', function() {
+        // Retrieve the amount from the summary
+        const amountInRupees = document.getElementById('summaryPrice').innerText.replace('₹', '').trim();
+        const amountInPaise = convertRupeesToPaise(amountInRupees);
+
+        var options = {
+            key: 'rzp_test_B3ip4XeUQV8UD1', // Replace with your Razorpay Key ID
+            amount: amountInPaise, // Amount in paise
+            currency: 'INR',
+            name: 'Assign Ur Assignment',
+            description: 'Test Transaction',
+            image: 'https://i.imghippo.com/files/fiQDW1723979650.jpg', // Replace with the public URL of your logo
+            handler: function (response) {
+                // On successful payment
+                alert('Payment Successful!');
+                console.log(response);
+                // Optionally, send response details to your server here
+                // Example: sendDataToServer(response);
+            },
+            modal: {
+                ondismiss: function() {
+                    // On payment failure or if the modal is dismissed
+                    window.location.href = 'payment-failed.html';
+                }
+            },
+            prefill: {
+                name: 'Customer Name',
+                email: 'customer@example.com',
+                contact: '9999999999'
+            },
+            theme: {
+                color: '#ff6600'
+            }
+        };
+
+        var paymentObject = new Razorpay(options);
+        paymentObject.open();
+    });
+
+    document.querySelector('.edit-btn').addEventListener('click', function() {
+        // Logic to go back to the previous form and edit details
+        window.history.back();
+    });
+</script>
+
+</body>
+</html>
